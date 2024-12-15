@@ -1,0 +1,302 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="kutuphane2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="kayitlar">
+          <Key>
+            <PropertyRef Name="kayitID" />
+          </Key>
+          <Property Name="kayitID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="uyeID" Type="int" />
+          <Property Name="kitapID" Type="int" />
+          <Property Name="alişTarih" Type="datetime" />
+          <Property Name="teslimTarih" Type="datetime" />
+          <Property Name="teslimDurum" Type="bit" />
+        </EntityType>
+        <EntityType Name="kaynaklar">
+          <Key>
+            <PropertyRef Name="kitapID" />
+          </Key>
+          <Property Name="kitapID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="kitapAd" Type="nchar" MaxLength="60" />
+          <Property Name="kitapYazar" Type="nchar" MaxLength="40" />
+          <Property Name="kitapYayınevi" Type="nchar" MaxLength="30" />
+          <Property Name="kitapSayfa" Type="int" />
+          <Property Name="kitapTarih" Type="datetime" />
+        </EntityType>
+        <EntityType Name="personel">
+          <Key>
+            <PropertyRef Name="personelID" />
+          </Key>
+          <Property Name="personelID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="personelAd" Type="nchar" MaxLength="30" />
+          <Property Name="personelSoyad" Type="nchar" MaxLength="30" />
+          <Property Name="personelTc" Type="nchar" MaxLength="11" />
+          <Property Name="personelTel" Type="nchar" MaxLength="11" />
+          <Property Name="personelMail" Type="nchar" MaxLength="60" />
+          <Property Name="personelKullaniciAdi" Type="nchar" MaxLength="40" />
+          <Property Name="personelŞifre" Type="nchar" MaxLength="40" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="uyeler">
+          <Key>
+            <PropertyRef Name="uyeID" />
+          </Key>
+          <Property Name="uyeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="uyeAd" Type="nchar" MaxLength="30" />
+          <Property Name="uyeSoyad" Type="nchar" MaxLength="30" />
+          <Property Name="uyeTc" Type="nchar" MaxLength="11" />
+          <Property Name="uyeMail" Type="nchar" MaxLength="40" />
+          <Property Name="uyeTel" Type="nchar" MaxLength="11" />
+          <Property Name="uyeCeza" Type="float" />
+          <Property Name="uyeCinsiyet" Type="nchar" MaxLength="1" />
+        </EntityType>
+        <Association Name="FK_kayitlar_kaynaklar">
+          <End Role="kaynaklar" Type="Self.kaynaklar" Multiplicity="0..1" />
+          <End Role="kayitlar" Type="Self.kayitlar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="kaynaklar">
+              <PropertyRef Name="kitapID" />
+            </Principal>
+            <Dependent Role="kayitlar">
+              <PropertyRef Name="kitapID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_kayitlar_uyeler1">
+          <End Role="uyeler" Type="Self.uyeler" Multiplicity="0..1" />
+          <End Role="kayitlar" Type="Self.kayitlar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="uyeler">
+              <PropertyRef Name="uyeID" />
+            </Principal>
+            <Dependent Role="kayitlar">
+              <PropertyRef Name="uyeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="kutuphane2ModelStoreContainer">
+          <EntitySet Name="kayitlar" EntityType="Self.kayitlar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="kaynaklar" EntityType="Self.kaynaklar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="personel" EntityType="Self.personel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="uyeler" EntityType="Self.uyeler" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_kayitlar_kaynaklar" Association="Self.FK_kayitlar_kaynaklar">
+            <End Role="kaynaklar" EntitySet="kaynaklar" />
+            <End Role="kayitlar" EntitySet="kayitlar" />
+          </AssociationSet>
+          <AssociationSet Name="FK_kayitlar_uyeler1" Association="Self.FK_kayitlar_uyeler1">
+            <End Role="uyeler" EntitySet="uyeler" />
+            <End Role="kayitlar" EntitySet="kayitlar" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="kutuphane2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="personel">
+          <Key>
+            <PropertyRef Name="personelID" />
+          </Key>
+          <Property Name="personelID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="personelAd" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="personelSoyad" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="personelTc" Type="String" MaxLength="11" FixedLength="true" Unicode="true" />
+          <Property Name="personelTel" Type="String" MaxLength="11" FixedLength="true" Unicode="true" />
+          <Property Name="personelMail" Type="String" MaxLength="60" FixedLength="true" Unicode="true" />
+          <Property Name="personelKullaniciAdi" Type="String" MaxLength="40" FixedLength="true" Unicode="true" />
+          <Property Name="personelŞifre" Type="String" MaxLength="40" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityContainer Name="kutuphane2Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="personel" EntityType="Self.personel" />
+          <EntitySet Name="uyeler" EntityType="kutuphane2Model.uyeler" />
+          <EntitySet Name="kaynaklar" EntityType="kutuphane2Model.kaynaklar" />
+          <EntitySet Name="kayitlar" EntityType="kutuphane2Model.kayitlar" />
+          <EntitySet Name="sysdiagrams" EntityType="kutuphane2Model.sysdiagrams" />
+          <AssociationSet Name="FK_kayitlar_kaynaklar" Association="kutuphane2Model.FK_kayitlar_kaynaklar">
+            <End Role="kaynaklar" EntitySet="kaynaklar" />
+            <End Role="kayitlar" EntitySet="kayitlar" />
+          </AssociationSet>
+          <AssociationSet Name="FK_kayitlar_uyeler1" Association="kutuphane2Model.FK_kayitlar_uyeler1">
+            <End Role="uyeler" EntitySet="uyeler" />
+            <End Role="kayitlar" EntitySet="kayitlar" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="uyeler">
+          <Key>
+            <PropertyRef Name="uyeID" />
+          </Key>
+          <Property Name="uyeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="uyeAd" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="uyeSoyad" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="uyeTc" Type="String" MaxLength="11" FixedLength="true" Unicode="true" />
+          <Property Name="uyeMail" Type="String" MaxLength="40" FixedLength="true" Unicode="true" />
+          <Property Name="uyeTel" Type="String" MaxLength="11" FixedLength="true" Unicode="true" />
+          <Property Name="uyeCeza" Type="Double" />
+          <Property Name="uyeCinsiyet" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="kayitlar" Relationship="kutuphane2Model.FK_kayitlar_uyeler1" FromRole="uyeler" ToRole="kayitlar" />
+        </EntityType>
+        <EntityType Name="kaynaklar">
+          <Key>
+            <PropertyRef Name="kitapID" />
+          </Key>
+          <Property Name="kitapID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="kitapAd" Type="String" MaxLength="60" FixedLength="true" Unicode="true" />
+          <Property Name="kitapYazar" Type="String" MaxLength="40" FixedLength="true" Unicode="true" />
+          <Property Name="kitapYayınevi" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="kitapSayfa" Type="Int32" />
+          <Property Name="kitapTarih" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="kayitlar" Relationship="kutuphane2Model.FK_kayitlar_kaynaklar" FromRole="kaynaklar" ToRole="kayitlar" />
+        </EntityType>
+        <EntityType Name="kayitlar">
+          <Key>
+            <PropertyRef Name="kayitID" />
+          </Key>
+          <Property Name="kayitID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="uyeID" Type="Int32" />
+          <Property Name="kitapID" Type="Int32" />
+          <Property Name="alişTarih" Type="DateTime" Precision="3" />
+          <Property Name="teslimTarih" Type="DateTime" Precision="3" />
+          <Property Name="teslimDurum" Type="Boolean" />
+          <NavigationProperty Name="kaynaklar" Relationship="kutuphane2Model.FK_kayitlar_kaynaklar" FromRole="kayitlar" ToRole="kaynaklar" />
+          <NavigationProperty Name="uyeler" Relationship="kutuphane2Model.FK_kayitlar_uyeler1" FromRole="kayitlar" ToRole="uyeler" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK_kayitlar_kaynaklar">
+          <End Type="kutuphane2Model.kaynaklar" Role="kaynaklar" Multiplicity="0..1" />
+          <End Type="kutuphane2Model.kayitlar" Role="kayitlar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="kaynaklar">
+              <PropertyRef Name="kitapID" />
+            </Principal>
+            <Dependent Role="kayitlar">
+              <PropertyRef Name="kitapID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_kayitlar_uyeler1">
+          <End Type="kutuphane2Model.uyeler" Role="uyeler" Multiplicity="0..1" />
+          <End Type="kutuphane2Model.kayitlar" Role="kayitlar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="uyeler">
+              <PropertyRef Name="uyeID" />
+            </Principal>
+            <Dependent Role="kayitlar">
+              <PropertyRef Name="uyeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="kutuphane2ModelStoreContainer" CdmEntityContainer="kutuphane2Entities">
+          <EntitySetMapping Name="personel">
+            <EntityTypeMapping TypeName="kutuphane2Model.personel">
+              <MappingFragment StoreEntitySet="personel">
+                <ScalarProperty Name="personelID" ColumnName="personelID" />
+                <ScalarProperty Name="personelAd" ColumnName="personelAd" />
+                <ScalarProperty Name="personelSoyad" ColumnName="personelSoyad" />
+                <ScalarProperty Name="personelTc" ColumnName="personelTc" />
+                <ScalarProperty Name="personelTel" ColumnName="personelTel" />
+                <ScalarProperty Name="personelMail" ColumnName="personelMail" />
+                <ScalarProperty Name="personelKullaniciAdi" ColumnName="personelKullaniciAdi" />
+                <ScalarProperty Name="personelŞifre" ColumnName="personelŞifre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="uyeler">
+            <EntityTypeMapping TypeName="kutuphane2Model.uyeler">
+              <MappingFragment StoreEntitySet="uyeler">
+                <ScalarProperty Name="uyeCinsiyet" ColumnName="uyeCinsiyet" />
+                <ScalarProperty Name="uyeCeza" ColumnName="uyeCeza" />
+                <ScalarProperty Name="uyeTel" ColumnName="uyeTel" />
+                <ScalarProperty Name="uyeMail" ColumnName="uyeMail" />
+                <ScalarProperty Name="uyeTc" ColumnName="uyeTc" />
+                <ScalarProperty Name="uyeSoyad" ColumnName="uyeSoyad" />
+                <ScalarProperty Name="uyeAd" ColumnName="uyeAd" />
+                <ScalarProperty Name="uyeID" ColumnName="uyeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="kaynaklar">
+            <EntityTypeMapping TypeName="kutuphane2Model.kaynaklar">
+              <MappingFragment StoreEntitySet="kaynaklar">
+                <ScalarProperty Name="kitapTarih" ColumnName="kitapTarih" />
+                <ScalarProperty Name="kitapSayfa" ColumnName="kitapSayfa" />
+                <ScalarProperty Name="kitapYayınevi" ColumnName="kitapYayınevi" />
+                <ScalarProperty Name="kitapYazar" ColumnName="kitapYazar" />
+                <ScalarProperty Name="kitapAd" ColumnName="kitapAd" />
+                <ScalarProperty Name="kitapID" ColumnName="kitapID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="kayitlar">
+            <EntityTypeMapping TypeName="kutuphane2Model.kayitlar">
+              <MappingFragment StoreEntitySet="kayitlar">
+                <ScalarProperty Name="teslimDurum" ColumnName="teslimDurum" />
+                <ScalarProperty Name="teslimTarih" ColumnName="teslimTarih" />
+                <ScalarProperty Name="alişTarih" ColumnName="alişTarih" />
+                <ScalarProperty Name="kitapID" ColumnName="kitapID" />
+                <ScalarProperty Name="uyeID" ColumnName="uyeID" />
+                <ScalarProperty Name="kayitID" ColumnName="kayitID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="kutuphane2Model.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
